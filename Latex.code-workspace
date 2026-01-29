@@ -49,6 +49,10 @@
     ],
     "latex-workshop.latex.recipes": [
       {
+        "name": "xelatex",
+        "tools": ["xelatex"]
+      },
+      {
         "name": "latexmk",
         "tools": ["latexmk"]
       },
@@ -56,10 +60,6 @@
       {
         "name": "pdflatex",
         "tools": ["pdflatex"]
-      },
-      {
-        "name": "xelatex",
-        "tools": ["xelatex"]
       },
       {
         "name": "bibTeX",
@@ -97,7 +97,7 @@
     ],
     "latex-workshop.showContextMenu": true,
     "latex-workshop.intellisense.package.enabled": true,
-    "latex-workshop.latex.recipe.default": "lastUsed",
+    "latex-workshop.latex.recipe.default": "first",
     "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
     "latex-workshop.view.pdf.viewer": "external",
     "latex-workshop.view.pdf.external.viewer.command": "/Applications/Skim.app/Contents/SharedSupport/displayline",
