@@ -2,64 +2,61 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+source <(fzf --zsh)
 
 export EDITOR="nvim"
 export VISUAL="nvim"
+
 export HOMEBREW_NO_INSTALL_CLEANUP=true
 
+export PATH="$HOME/go/bin:$HOME/.local/bin:$PATH"
 
-export PATH="$HOME/go/bin:$PATH"
-export PATH="$PATH:$HOME/.local/bin"
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
+fi
 
-export PNPM_HOME="$HOME/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
+zinit ice depth=1; zinit light romkatv/powerlevel10k
+
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light zdharma-continuum/fast-syntax-highlighting
+zinit light Aloxaf/fzf-tab
+zinit light lukechilds/zsh-nvm
+
+zinit snippet OMZP::sudo
+zinit snippet OMZP::git
+
+zinit snippet OMZ::lib/clipboard.zsh
+zinit snippet OMZ::lib/completion.zsh
+zinit snippet OMZ::lib/history.zsh
+zinit snippet OMZ::lib/key-bindings.zsh
 
 if type brew &>/dev/null; then
-  FPATH="$(brew --prefix)/share/zsh-completions:$FPATH"
-
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
   autoload -Uz compinit
   compinit
 fi
 
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+zstyle ':fzf-tab:*' switch-group '<' '>'
 
-export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
-plugins=(
-  sudo
-)
-
-source "$ZSH/oh-my-zsh.sh"
-
-
-autoload -Uz edit-command-line
-zle -N edit-command-line
-bindkey '^x^e' edit-command-line
-
-
-if type fzf &>/dev/null; then
-  source <(fzf --zsh)
-fi
-
-if [[ -r /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
-  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-fi
-
-if [[ -r /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
-  source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
-
-if type zoxide &>/dev/null; then
-  eval "$(zoxide init zsh)"
-fi
-
-
-[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
-
+eval "$(zoxide init zsh --cmd cd)"
 
 export FZF_CTRL_T_OPTS="
   --walker-skip .git,node_modules,target
@@ -75,11 +72,15 @@ export FZF_ALT_C_OPTS="
   --walker-skip .git,node_modules,target
   --preview 'tree -C {}'"
 
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
+export PNPM_HOME="$HOME/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
 
 __conda_setup="$('/Users/kele/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
@@ -93,6 +94,13 @@ else
 fi
 unset __conda_setup
 
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^x^e' edit-command-line
 
+alias ls="eza"
+alias ll="ls -l"
+alias la="ls -la"
 alias lab="ssh why@lab"
-alias -g bat="bat --theme-dark Catppuccin Latte --theme-light Catppuccin Latte"
+
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
