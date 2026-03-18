@@ -1,0 +1,18 @@
+font-size = 16
+font-family = Maple Mono NF CN
+font-feature = cv01,cv04
+theme = dark:Catppuccin Macchiato, light:Catppuccin Latte
+
+shell-integration = zsh
+shell-integration-features = no-cursor, sudo
+cursor-style = block
+cursor-style-blink = false
+copy-on-select = clipboard
+
+window-height = 45
+window-width = 120
+
+quick-terminal-position = center
+quick-terminal-size = 50%,800px
+
+keybind = global:cmd+backslash=toggle_quick_terminal
