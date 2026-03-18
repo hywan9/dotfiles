@@ -5,11 +5,13 @@ fi
 source <(fzf --zsh)
 
 export EDITOR="nvim"
-export VISUAL="nvim"
 
 export HOMEBREW_NO_INSTALL_CLEANUP=true
 
 export PATH="$HOME/go/bin:$HOME/.local/bin:$PATH"
+
+export PATH="/Users/kele/.antigravity/antigravity/bin:$PATH"
+
 
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
@@ -103,4 +105,13 @@ alias ll="ls -l"
 alias la="ls -la"
 alias lab="ssh why@lab"
 
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
+
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
