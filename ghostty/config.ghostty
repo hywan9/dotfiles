@@ -1,6 +1,6 @@
 font-size = 16
-font-family = Maple Mono NF CN
-font-feature = cv01,cv04
+font-family = Maple Mono NL NF CN
+font-feature = cv01
 theme = dark:Catppuccin Macchiato, light:Catppuccin Latte
 
 shell-integration = zsh
