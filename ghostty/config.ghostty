@@ -1,6 +1,5 @@
-font-size = 16
-font-family = Maple Mono NL NF CN
-font-feature = cv01
+font-size = 15
+font-family = FiraCode Nerd Font Mono
 theme = dark:Catppuccin Macchiato, light:Catppuccin Latte
 
 shell-integration = zsh
@@ -9,10 +8,18 @@ cursor-style = block
 cursor-style-blink = false
 copy-on-select = clipboard
 
-window-height = 45
+window-height = 40
 window-width = 120
 
 quick-terminal-position = center
 quick-terminal-size = 50%,800px
 
-keybind = global:cmd+backslash=toggle_quick_terminal
+keybind = global:ctrl+q=toggle_quick_terminal
+keybind = super+shift+j=goto_split:up
+keybind = super+shift+k=goto_split:down
+keybind = super+shift+h=goto_split:left
+keybind = super+shift+l=goto_split:right
+keybind = super+ctrl+j=resize_split:up,10
+keybind = super+ctrl+k=resize_split:down,10
+keybind = super+ctrl+h=resize_split:left,10
+keybind = super+ctrl+l=resize_split:right,10
