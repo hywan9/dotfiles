@@ -40,7 +40,7 @@ zinit light Aloxaf/fzf-tab
 zinit light lukechilds/zsh-nvm
 
 zinit snippet OMZP::sudo
-zinit snippet OMZP::git
+# zinit snippet OMZP::git
 
 zinit snippet OMZ::lib/clipboard.zsh
 zinit snippet OMZ::lib/completion.zsh
@@ -103,6 +103,9 @@ bindkey '^x^e' edit-command-line
 alias ls="eza"
 alias ll="ls -l"
 alias la="ls -la"
+alias vi="nvim"
+alias vim="nvim"
+alias g="gemini"
 alias lab="ssh why@lab"
 
 function y() {
