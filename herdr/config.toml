@@ -1,0 +1,19 @@
+onboarding = false
+
+[theme]
+name = "catppuccin"
+
+auto_switch = true
+dark_name = "catppuccin"
+light_name = "catppuccin-latte"
+
+[keys]
+prefix = "ctrl+a"
+
+detach = "prefix+d"
+
+[ui]
+show_agent_labels_on_pane_borders = true
+
+[ui.toast]
+delivery = "herdr"

@@ -8,9 +8,12 @@ export EDITOR="nvim"
 
 export HOMEBREW_NO_INSTALL_CLEANUP=true
 
+export GOPROXY=https://goproxy.io,direct
+
 export PATH="$HOME/go/bin:$HOME/.local/bin:$PATH"
 
-export PATH="/Users/kele/.antigravity/antigravity/bin:$PATH"
+export PATH=/Users/$HOME/.opencode/bin:$PATH
+
 
 
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -84,18 +87,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
-__conda_setup="$('/Users/kele/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-  eval "$__conda_setup"
-else
-  if [ -f "/Users/kele/miniforge3/etc/profile.d/conda.sh" ]; then
-    . "/Users/kele/miniforge3/etc/profile.d/conda.sh"
-  else
-    export PATH="/Users/kele/miniforge3/bin:$PATH"
-  fi
-fi
-unset __conda_setup
-
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '^x^e' edit-command-line
@@ -117,4 +108,3 @@ function y() {
 }
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
