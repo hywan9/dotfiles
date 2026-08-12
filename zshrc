@@ -15,7 +15,6 @@ export PATH="$HOME/go/bin:$HOME/.local/bin:$PATH"
 export PATH=/Users/$HOME/.opencode/bin:$PATH
 
 
-
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
     command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
@@ -96,7 +95,6 @@ alias ll="ls -l"
 alias la="ls -la"
 alias vi="nvim"
 alias vim="nvim"
-alias g="gemini"
 alias lab="ssh why@lab"
 
 function y() {
