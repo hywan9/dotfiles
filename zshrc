@@ -6,13 +6,17 @@ source <(fzf --zsh)
 
 export EDITOR="nvim"
 
+export NVM_DIR="$HOME/.nvm"
+export NVM_LAZY_LOAD=true
+export NVM_COMPLETION=true
+
 export HOMEBREW_NO_INSTALL_CLEANUP=true
 
 export GOPROXY=https://goproxy.io,direct
 
 export PATH="$HOME/go/bin:$HOME/.local/bin:$PATH"
 
-export PATH=/Users/$HOME/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
 
 
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -75,10 +79,6 @@ export FZF_CTRL_R_OPTS="
 export FZF_ALT_C_OPTS="
   --walker-skip .git,node_modules,target
   --preview 'tree -C {}'"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
