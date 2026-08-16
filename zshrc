@@ -2,11 +2,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-source <(fzf --zsh)
-
 export EDITOR="nvim"
 
-export NVM_DIR="$HOME/.nvm"
 export NVM_LAZY_LOAD=true
 export NVM_COMPLETION=true
 
@@ -14,10 +11,20 @@ export HOMEBREW_NO_INSTALL_CLEANUP=true
 
 export GOPROXY=https://goproxy.io,direct
 
-export PATH="$HOME/go/bin:$HOME/.local/bin:$PATH"
+export PNPM_HOME="$HOME/Library/pnpm"
 
-export PATH="$HOME/.opencode/bin:$PATH"
+typeset -U path PATH fpath FPATH
+path=(
+  "$PNPM_HOME"
+  "$HOME/.kimi-code/bin"
+  "$HOME/go/bin"
+  "$HOME/.local/bin"
+  $path
+)
 
+if (( $+commands[brew] )); then
+  fpath=("$(brew --prefix)/share/zsh/site-functions" $fpath)
+fi
 
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
@@ -29,37 +36,27 @@ fi
 
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-
-zinit light-mode for \
-    zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust
 
 zinit ice depth=1; zinit light romkatv/powerlevel10k
-
 zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
-zinit light zdharma-continuum/fast-syntax-highlighting
-zinit light Aloxaf/fzf-tab
-zinit light lukechilds/zsh-nvm
 
 zinit snippet OMZP::sudo
-# zinit snippet OMZP::git
-
 zinit snippet OMZ::lib/clipboard.zsh
 zinit snippet OMZ::lib/completion.zsh
 zinit snippet OMZ::lib/history.zsh
 zinit snippet OMZ::lib/key-bindings.zsh
 
-if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
-  autoload -Uz compinit
-  compinit
-fi
+source <(fzf --zsh)
 
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+autoload -Uz compinit
+compinit
+_comps[zinit]=_zinit
+
+zinit light Aloxaf/fzf-tab
+zinit light lukechilds/zsh-nvm
+zinit light zsh-users/zsh-autosuggestions
+zinit light zdharma-continuum/fast-syntax-highlighting
+
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 zstyle ':fzf-tab:*' switch-group '<' '>'
@@ -79,12 +76,6 @@ export FZF_CTRL_R_OPTS="
 export FZF_ALT_C_OPTS="
   --walker-skip .git,node_modules,target
   --preview 'tree -C {}'"
-
-export PNPM_HOME="$HOME/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
 
 autoload -Uz edit-command-line
 zle -N edit-command-line
